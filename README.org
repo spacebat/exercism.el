@@ -1,0 +1,38 @@
+#+TITLE: exercism.el
+
+* Synopsis
+
+Following through [[http://exercism.io][Exercism.io]] tracks is a great way of learning different programming languages, but there is a fair bit of houskeeping that needs to be done, downloading exercises, running tests, submitting solutions and iterating through improvements.
+
+This project provides an Emacs minor mode to remove some of the effort involved.
+
+* Status
+
+This project should be considered to be in an alpha state. It works in a limited but sufficient capacity for the author on Emacs 27.0.50.
+
+Patches welcome.
+
+* Installation
+
+#+BEGIN_SRC elisp
+  (add-to-list 'load-path "path/to/exercism.el")
+
+  (require 'exercism)
+#+END_SRC
+
+You might want to add a =.dir-locals.el= file to the root of your Exercism workspace:
+
+#+BEGIN_SRC elisp
+  ((nil . ((eval . (exercism-mode 1)))))
+#+END_SRC
+
+* Usage
+
+While =exercism-mode= is enabled, the following keybindings are set by default:
+
+| Key   | Command                     | Description                                  |
+|-------+-----------------------------+----------------------------------------------|
+| C-c S | exercism-submit             | Submit the current buffer's file to exercism |
+| C-c O | exercism-open               | Open the current exercise in a web browser   |
+| C-c C | exercism-show-configuration | Show the exercism CLI configuration          |
+
