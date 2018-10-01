@@ -6,21 +6,18 @@
 
 ;; To do:
 ;; List available exercises
+;; Download an exercise
 ;; Find the file(s) that are to be edited
+;; Run the test suite
 ;; Hit the API for things like mentor feedback
 
 (defvar exercism-executable "exercism")
 
-(defvar exercism--commands '(("configure"    "Configure the command-line client.")
-                             ("download"     "Download an exercise.")
-                             ("help"         "Help about any command")
-                             ("open"         "Open an exercise on the website.")
-                             ("prepare"      "Prepare does setup for Exercism and its tracks.")
-                             ("submit"       "Submit your solution to an exercise.")
-                             ("troubleshoot" "Troubleshoot does a diagnostic self-check.")
-                             ("upgrade"      "Upgrade to the latest version of the CLI.")
-                             ("version"      "Version outputs the version of CLI.")
-                             ("workspace"    "Print out the path to your Exercism workspace.")))
+(defun exercism--skewer-case (string)
+  (replace-regexp-in-string "[^[:alnum:]]+" "-" (downcase string)))
+
+(defun exercism--lisp-identifier (string)
+  (intern (exercism--skewer-case string)))
 
 (defun exercism--next-line ()
   (when (< (point) (point-max))
@@ -50,12 +47,6 @@
   `(let ((func (lambda (,var)
                  ,@body)))
      (exercism--call-with-lines func :start ,start :end ,end :chomp ,chomp :collect ,collect :omit-nulls ,omit-nulls)))
-
-(defun exercism--skewer-case (string)
-  (replace-regexp-in-string "[^[:alnum:]]+" "-" (downcase string)))
-
-(defun exercism--lisp-identifier (string)
-  (intern (exercism--skewer-case string)))
 
 (defun exercism--get-config ()
   (exercism--with-exec ("configure" "--show")
